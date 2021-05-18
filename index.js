@@ -34,3 +34,13 @@ app.get(`${endpoint}/:id`, function(req, res){
         res.send(note);
     }   
 });
+
+app.post(endpoint, (req, res) => {
+    const note = {
+        id : notes.length,
+        title : req.body["title"],
+        description : req.body["description"]
+    };
+    notes.push(note);
+    res.send("1");
+});
