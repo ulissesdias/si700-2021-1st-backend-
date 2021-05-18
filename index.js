@@ -44,3 +44,15 @@ app.post(endpoint, (req, res) => {
     notes.push(note);
     res.send("1");
 });
+
+app.put(`${endpoint}/:id`, (req, res) =>{
+    const id = req.params.id;
+    const note = {
+        id : id,
+        title : req.body["title"],
+        description : req.body["description"]
+    };
+
+    notes[id] = note;
+    res.send("1");
+});
