@@ -21,7 +21,7 @@ const notes = [
 const endpoint = "/notes";
 
 app.get(endpoint, function(req, res){
-    res.send(notes);
+    res.send(notes.filter(Boolean));
 });
 
 app.get(`${endpoint}/:id`, function(req, res){
