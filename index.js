@@ -56,3 +56,9 @@ app.put(`${endpoint}/:id`, (req, res) =>{
     notes[id] = note;
     res.send("1");
 });
+
+app.delete(`${endpoint}/:id`, (req, res) => {
+    const id = req.params.id;
+    delete notes[id];
+    res.send("1");
+});
