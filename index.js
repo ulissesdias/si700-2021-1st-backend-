@@ -4,7 +4,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
-app.listen(3000);
+// app.listen(3000);
 
 
 app.get('/', function(req, res){res.send('Hello world')});
@@ -43,6 +43,8 @@ app.post(endpoint, (req, res) => {
     };
     notes.push(note);
     res.send("1");
+
+    notify();
 });
 
 app.put(`${endpoint}/:id`, (req, res) =>{
@@ -55,10 +57,32 @@ app.put(`${endpoint}/:id`, (req, res) =>{
 
     notes[id] = note;
     res.send("1");
+
+    notify();
 });
 
 app.delete(`${endpoint}/:id`, (req, res) => {
     const id = req.params.id;
     delete notes[id];
     res.send("1");
+
+    // Notificar todos
+    notify();
 });
+
+
+/*
+  Criar um socket para notificar usuários das mudanças.
+*/
+
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+
+// Comunicação
+const INVALIDATE = 'invalidate';
+
+function notify(){
+    io.sockets.emit(INVALIDATE, 1);
+}
+
+server.listen(3000);
